@@ -6,9 +6,12 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import AppUser
-from .widgets import SendEmailButton
+from .widgets import SendEmailButton, IDWidget, ImgWidget
+
 
 class AppUserForm(forms.ModelForm):
+    id = forms.CharField(widget=IDWidget, label='主键', disabled=True)
+
     name = forms.CharField(min_length=8,
                            max_length=20,
                            required=True,
@@ -35,29 +38,29 @@ class AppUserForm(forms.ModelForm):
     email = forms.CharField(required=False,
                             widget=SendEmailButton, label='邮箱')
 
+    img1 = forms.CharField(max_length=100, widget=ImgWidget)
+
     class Meta:
         model = AppUser
-        fields = ('name', 'auth_key', 'phone', 'email')
+        fields = ('id', 'img1', 'name', 'auth_key', 'phone', 'email')
         error_messages = {
             'email': {
                 'required': '邮箱不能为空'
             }
         }
 
-
     def is_valid(self):
         print('--is_valid---')
         return super().is_valid()
-
 
     def clean_auth_key(self):
         # 以上验证都通过了
         # 自定义验证规则： 必须包含大写、小写和数字等字符
         auth_key = self.cleaned_data.get('auth_key')
         if all((
-            re.search(r'\d+', auth_key),
-            re.search(r'[a-z]+', auth_key),
-            re.search(r'[A-Z]+',auth_key)
+                re.search(r'\d+', auth_key),
+                re.search(r'[a-z]+', auth_key),
+                re.search(r'[A-Z]+', auth_key)
         )):
             print('-----clean_auth_key-----')
             return auth_key

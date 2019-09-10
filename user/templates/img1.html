@@ -1,0 +1,35 @@
+<input type="{{ widget.type }}"
+       name="{{ widget.name }}"
+       {% if widget.value %} value="{{ widget.value|stringformat:'s' }}" {% endif %}/>
+</div>
+
+<input type="file" id="imgFile"
+       onchange="upload_img(this.files[0])"
+       style="display: none;">
+
+<div style="padding: 5px">
+    <button type="button" style="padding: 5px 10px;border-radius: 5px;background-color:lightblue;"
+            onclick="imgFile.click()">上传头像
+    </button>
+
+    <script>
+        function upload_img(file) {
+            console.log(file);
+            id_value = document.getElementById('id_id').value;
+            url = '/upload_img/' + id_value + "/";
+
+            let request = new XMLHttpRequest()
+            request.open('post', url, true)
+            request.onload = function () {
+                if(request.status == 200 && request.readyState==4){
+                    data = JSON.parse(request.responseText)
+                    document.getElementsByName('img1')[0].value= data.path
+                }
+            };
+
+            let formdata = new FormData();
+            formdata.append('img1', file);
+
+            request.send(formdata);
+        }
+    </script>
