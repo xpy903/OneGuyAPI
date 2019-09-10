@@ -6,6 +6,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import AppUser
+from .widgets import SendEmailButton
 
 class AppUserForm(forms.ModelForm):
     name = forms.CharField(min_length=8,
@@ -28,9 +29,11 @@ class AppUserForm(forms.ModelForm):
 
     phone = forms.CharField(max_length=11,
                             min_length=11,
-                            required=False)
+                            required=False, label='手机号')
 
-    email = forms.CharField(required=False)
+    # 通过widget属性指定自定义widget部件
+    email = forms.CharField(required=False,
+                            widget=SendEmailButton, label='邮箱')
 
     class Meta:
         model = AppUser

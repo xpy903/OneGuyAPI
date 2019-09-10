@@ -14,8 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import path
+
+def send_mail(request, email):
+
+    print('send_mail', email)
+
+    return JsonResponse({
+        'msg': '发送成功',
+        'info': {
+            'email': email
+        }
+    })
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('send_mail/<email>/', send_mail),
 ]
