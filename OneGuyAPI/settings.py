@@ -114,3 +114,8 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/m/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'disenQF@163.com'
+EMAIL_HOST_PASSWORD = 'xapython1903'

@@ -10,7 +10,7 @@ from .widgets import SendEmailButton, IDWidget, ImgWidget
 
 
 class AppUserForm(forms.ModelForm):
-    id = forms.CharField(widget=IDWidget, label='主键', disabled=True)
+    id = forms.CharField(widget=IDWidget, min_length=32, max_length=32, label='主键', disabled=True)
 
     name = forms.CharField(min_length=8,
                            max_length=20,

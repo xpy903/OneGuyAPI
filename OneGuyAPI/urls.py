@@ -19,10 +19,28 @@ from django.http import JsonResponse
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 
+from django.core.mail import send_mail as send_163_email
+
+from threading import Thread
+
+from common.mail import send_mail as my_send_mail
 
 def send_mail(request, email):
-
     print('send_mail', email)
+
+    subtitle = '用户激活通知'
+    message = '<html>亲爱的， 注册的用户disen！请先<a href="/">激活的用户</a></html>'
+
+    # send_163_email(subtitle, '', html_message=message,
+    #                from_email='disenQF@163.com',
+    #                recipient_list=[email])
+
+    Thread(target=my_send_mail,
+           kwargs={
+               'title': subtitle,
+               'message': message,
+               'receivers': [email]
+           }).start()
 
     return JsonResponse({
         'msg': '发送成功',
@@ -44,6 +62,7 @@ def upload_img(request, user_id):
         'msg': '上传成功',
         'path': 'users/1.jpg'
     })
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

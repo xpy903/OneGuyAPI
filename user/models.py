@@ -8,7 +8,7 @@ class AppUserManager(models.Manager):
 
 # Create your models here.
 class AppUser(YGBaseModel):
-    name = models.CharField(max_length=20,
+    name = models.CharField(max_length=50,
                             verbose_name='用户名')
     auth_key = models.CharField(max_length=100,
                                 verbose_name='口令')
