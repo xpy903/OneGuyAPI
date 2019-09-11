@@ -30,16 +30,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'commondity',
     'user',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'OneGuyAPI.urls'
@@ -119,3 +122,11 @@ EMAIL_HOST = 'smtp.163.com'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'disenQF@163.com'
 EMAIL_HOST_PASSWORD = 'xapython1903'
+
+
+# Cors设置-白名单
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:63342',
+# )
+CORS_ALLOW_CREDENTIALS = True  # 启用Cookie
+CORS_ORIGIN_ALLOW_ALL = True

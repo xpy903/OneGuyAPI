@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>主页</title>
+</head>
+<body>
+
+<p>
+    <button onclick="login()">登录</button>
+</p>
+<div id="result">
+
+</div>
+<script>
+    function login() {
+        url = 'http://localhost:8000/user/?action=login';
+
+        data = {
+            name: "disen888666",
+            password: 'Disen666'
+        };
+        fetch(url, {
+            method: 'post',
+            body:JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(resp => resp.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('result').innerHTML = JSON.stringify(data.data);
+                setTimeout(function () {
+                    get_info(data.data.id)
+                }, 2000)
+            })
+    }
+
+    function get_info(id) {
+        alert('开始查询用户: '+id)
+        url = 'http://localhost:8000/user/?id='+id;
+        fetch(url).then(resp=>resp.json())
+            .then(data=>{
+                if(data.code==200){
+                     document.getElementById('result').innerHTML = data.data.phone+"--->"+data.data.name;
+                }else{
+                    document.getElementById('result').innerHTML = data.msg;
+                }
+
+            })
+    }
+
+</script>
+
+
+</body>
+</html>

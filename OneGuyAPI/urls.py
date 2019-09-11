@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import JsonResponse
-from django.urls import path
+from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 
 from django.core.mail import send_mail as send_163_email
@@ -66,6 +66,7 @@ def upload_img(request, user_id):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('user/', include('user.urls')),
     path('send_mail/<email>/', send_mail),
     path('upload_img/<user_id>/', upload_img),
 ]

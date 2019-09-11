@@ -10,7 +10,9 @@ from .widgets import SendEmailButton, IDWidget, ImgWidget
 
 
 class AppUserForm(forms.ModelForm):
-    id = forms.CharField(widget=IDWidget, min_length=32, max_length=32, label='主键', disabled=True)
+    id = forms.CharField(widget=IDWidget,
+                         min_length=32, max_length=32,
+                         label='主键', disabled=True)
 
     name = forms.CharField(min_length=8,
                            max_length=20,
@@ -22,7 +24,7 @@ class AppUserForm(forms.ModelForm):
                            })
 
     # 自定义验证规则： 必须包含大写、小写和数字等字符
-    auth_key = forms.CharField(widget=forms.PasswordInput,
+    auth_key = forms.CharField(widget=forms.PasswordInput(render_value=True),
                                label='口令',
                                min_length=6,
                                error_messages={
